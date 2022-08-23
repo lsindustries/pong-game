@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from scores import Scores
 import time
 
 screen = Screen()
@@ -12,7 +13,8 @@ screen.tracer(0)
 r_paddle = Paddle((350, 0))
 l_paddle = Paddle((-350, 0))
 ball = Ball()
-
+scores_a = Scores((-100, 275))
+scores_b = Scores((100, 275))
 
 screen.listen()
 screen.onkey(r_paddle.up, "Up")
@@ -31,10 +33,15 @@ while game_on:
         ball.bounce()
 
     #detect collision with paddle
-    if ball.distance(r_paddle) < 50 and ball.xcor() > 333 or ball.distance(l_paddle) and ball.xcor() < -333:
-        print("colision")
+    if ball.distance(r_paddle) < 50 and ball.xcor() > 320 or ball.distance(l_paddle) < 50 and ball.xcor() < -320:
         ball.bounce_x()
 
+    if ball.xcor() > 375:
+        scores_a.get_point()
+        ball.reset()
+    if ball.xcor() < -375:
+        scores_b.get_point()
+        ball.reset()
 
 
 
